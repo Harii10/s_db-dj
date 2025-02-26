@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-8&qzg)u%&foccep1ppu$5(1ks!_hw5sll$!!7x&bm-3h1m9_4a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["hariichandru.pythonanywhere.com"]
 
 
 # Application definition
@@ -146,6 +146,6 @@ FILE_UPLOAD_HANDLERS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173/', 'https://harii10.github.io/admin/']
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'https://harii10.github.io/admin/']
 
 
