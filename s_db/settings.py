@@ -146,6 +146,6 @@ FILE_UPLOAD_HANDLERS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'https://harii10.github.io/admin/']
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'https://harii10.github.io']
 
 
