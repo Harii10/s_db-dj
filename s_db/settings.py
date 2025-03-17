@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-8&qzg)u%&foccep1ppu$5(1ks!_hw5sll$!!7x&bm-3h1m9_4a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["hariichandru.pythonanywhere.com"]
+# ALLOWED_HOSTS = ["hariichandru.pythonanywhere.com"]
 
 
 # Application definition
@@ -83,10 +83,14 @@ WSGI_APPLICATION = "s_db.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "hariichandru$default ",
+        "NAME": "hariichandru$default",
         "USER" : "hariichandru",
         "PASSWORD": "Jonsnow@1152",
         'HOST': 'hariichandru.mysql.pythonanywhere-services.com',
+        # "NAME": "sounds_c",
+        # "USER" : "root",
+        # "PASSWORD": "",
+        # 'HOST': 'hariichandru.mysql.pythonanywhere-services.com',
         "PORT": "3306",
         'OPTIONS': {
             'charset': 'utf8mb4',

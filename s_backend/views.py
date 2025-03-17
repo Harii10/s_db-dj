@@ -15,17 +15,20 @@ def home(request):
 
 # Songs
 @api_view(["GET", "POST"])
-@csrf_exempt
+# @csrf_exempt
 def FileUploadView(request):
     if request.method == "POST":
+        print("✅ Received FormData:", request.POST)
+        print("✅ Received Files:", request.FILES)
         title = request.POST.get("songname")
         movie = request.POST.get("moviename")
         artists = request.POST.get("artistname")
+        id_number = request.POST.get("songid")
         
         track = request.FILES.get("trackfile")
         image = request.FILES.get("picturefile")
 
-        print(f"✅ Extracted Data: Title: {title}, Artists: {artists}, Movie: {movie}")
+        print(f"✅ Extracted Data: Title: {title} ID : {id_number} Artists: {artists}, Movie: {movie}")
         print(f"✅ Track: {track}, Image: {image}")
 
         if not title or not artists or not movie or not track or not image:
@@ -34,6 +37,7 @@ def FileUploadView(request):
 
         SongInfos = SongInformation.objects.create(
             Title=title,
+            Id_number=id_number,
             Artists=artists,
             Movie=movie,
             Track=track,
@@ -44,7 +48,6 @@ def FileUploadView(request):
         return JsonResponse({"message": "Song added successfully!", "id": SongInfos.id}, status=201)
 
     return JsonResponse({"Success": " Uploaded successfully!"}, status=201)
-    return JsonResponse({"Success": " Uploaded successfully!"}, status=4005)
 
 def getSongInfos(request):
     songs = SongInformation.objects.all()
@@ -54,6 +57,7 @@ def getSongInfos(request):
         song_list.append({
             "id": song.id,
             "Title": song.Title,
+            "ID_Number": song.Id_number,
             "Artists": song.Artists,
             "Movie": song.Movie,
             "Track": request.build_absolute_uri(song.Track.url),
@@ -194,8 +198,9 @@ def getmovie(request):
     if request.method == "POST":
         moviename = request.POST.get('Moviename')
         movieimage = request.FILES.get('Mimagefile')
+        id_number = request.POST.get('Movieid')
 
-        print(f"Extracted Data Movie Name: {moviename} Movie image: {movieimage}")
+        print(f"Extracted Data Movie Name: {moviename} Movie image: {movieimage} Id_Number: {id_number}")
 
         if not moviename or not movieimage:
             print("❌ Missing fields in the request!")
@@ -203,7 +208,8 @@ def getmovie(request):
         print("Sucessfull")
         MovieInfo = MovieInformation.objects.create(
             Name = moviename,
-            Image = movieimage
+            Image = movieimage,
+            Id_number = id_number
         )
         MovieInfo.save()
         print("✅ Song saved successfully:", MovieInfo.id)
@@ -222,6 +228,7 @@ def getMovieInfo(request):
             "id": movie.id,
             "Movie_Name": movie.Name,
             "Image": request.build_absolute_uri(movie.Image.url),
+            "ID_Number": movie.Id_number
         })
     
     # Include total song count in the response
