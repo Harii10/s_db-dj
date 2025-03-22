@@ -26,10 +26,10 @@ def FileUploadView(request):
         id_number = request.POST.get("songid")
         
         track = request.FILES.get("trackfile")
-        image = request.FILES.get("picturefile")
+        # image = request.FILES.get("picturefile")
 
         print(f"✅ Extracted Data: Title: {title} ID : {id_number} Artists: {artists}, Movie: {movie}")
-        print(f"✅ Track: {track}, Image: {image}")
+        print(f"✅ Track: {track}")
 
         if not title or not artists or not movie or not track or not image:
             print("❌ Missing fields in the request!")
@@ -41,7 +41,7 @@ def FileUploadView(request):
             Artists=artists,
             Movie=movie,
             Track=track,
-            Picture=image
+            # Picture=image
         )
         SongInfos.save()
         print("✅ Song saved successfully:", SongInfos.id)
@@ -61,7 +61,7 @@ def getSongInfos(request):
             "Artists": song.Artists,
             "Movie": song.Movie,
             "Track": request.build_absolute_uri(song.Track.url),
-            "Picture": request.build_absolute_uri(song.Picture.url),
+            # "Picture": request.build_absolute_uri(song.Picture.url),
         })
     
     # Include total song count in the response
@@ -72,73 +72,6 @@ def getSongInfos(request):
     return JsonResponse(response_data, safe=False)
 
 
-# Album
-
-# @api_view(["GET", "POST"])
-# @csrf_exempt
-# def getAlbum(request):
-#     if request.method == "POST":
-#         # Extract data from request
-#         albname = request.POST.get('albumname')
-#         albmovie = request.POST.get('amoviename')
-#         albartist = request.POST.get('albartistname')
-#         albimage = request.FILES.get('albpicfile')
-#         albtrack_ids = request.POST.getlist('albtrackfile')  # Get list of track IDs
-
-#         print(f"Extracted Data: Album Name: {albname}, Movie: {albmovie}, Artist: {albartist}, Image: {albimage}, Tracks: {albtrack_ids}")
-
-#         if not albname or not albmovie or not albartist or not albimage or not albtrack_ids:
-#             print("❌ Missing fields in the request!")
-#             return JsonResponse({"error": "Missing fields"}, status=400)
-
-#         # ✅ Create Album Entry
-#         album_info = AlbumInformation.objects.create(
-#             Title=albname,
-#             Artists=albartist,
-#             Movie=albmovie,
-#             Image=albimage
-#         )
-
-#         # ✅ Assign Many-to-Many Tracks
-#         tracks = TrackModel.objects.filter(id__in=albtrack_ids)  # Get tracks from DB
-#         album_info.Tracks.set(tracks)  # Assign track relationships
-#         album_info.save()
-
-#         print("✅ Album saved successfully:", album_info.id)
-#         return JsonResponse({"message": "Album added successfully!", "id": album_info.id}, status=201)
-
-#     return JsonResponse({"error": "Invalid request method"}, status=405)
-
-
-
-# def getAlbumInfo(request):
-#     if request.method == "GET":
-#         albums = AlbumInformation.objects.prefetch_related('Tracks').all()
-#         total_albums = albums.count()
-        
-#         album_list = []
-#         for album in albums:
-#             track_list = [
-#                 {"id": track.id, "title": track.title, "url": track.url} for track in album.Tracks.all()
-#             ]
-#             album_list.append({
-#                 "id": album.id,
-#                 "Title": album.Title,
-#                 "Artists": album.Artists,
-#                 "Movie": album.Movie,
-#                 "Image": album.Image.url if album.Image else None,
-#                 "Alb_tracks": track_list
-#             })
-
-#         response_data = {
-#             "total_Albums": total_albums,
-#             "artists": [album.Artists for album in albums],
-#             "Alb_tracks": album_list
-#         }
-
-#         return JsonResponse(response_data, safe=False, status=200)
-
-#     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 #  Artists
 
